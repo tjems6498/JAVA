@@ -14,16 +14,16 @@ import mem.Service;
 import mem.ServiceImpl;
 
 /**
- * Servlet implementation class SignUp
+ * Servlet implementation class Out
  */
-@WebServlet("/SignUp")
-public class SignUp extends HttpServlet {
+@WebServlet("/member/Out")
+public class Out extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SignUp() {
+    public Out() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -33,7 +33,13 @@ public class SignUp extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String id = request.getParameter("id");
+		Service service = new ServiceImpl();
+		service.delMember(id);
+		
+		RequestDispatcher ds = request.getRequestDispatcher("/member/out.jsp");
+		ds.forward(request, response);
+		
 	}
 
 	/**
@@ -41,22 +47,7 @@ public class SignUp extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String result = "form.jsp";
-		Service service = new ServiceImpl();
-		String id = request.getParameter("id");
-		String pwd = request.getParameter("pwd");
-		String name = request.getParameter("name");
-		String email = request.getParameter("email");
-	
-		Member m = new Member(id, pwd, name, email);
-		boolean flag = service.addMember(m);
-		System.out.println(flag);
-		if (flag) {
-			result = "cssTest.jsp";
-		}
-		RequestDispatcher ds = request.getRequestDispatcher(result);
-		ds.forward(request, response);		
-		
+		doGet(request, response);
 	}
 
 }
