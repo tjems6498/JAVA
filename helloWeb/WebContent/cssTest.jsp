@@ -44,7 +44,8 @@ td{
 <th class="c1">PWD</th><td class="c1"><input type="password" name="pwd"></td>
 </tr>
 <tr>
-<td colspan="2"><input id="test" type="submit" value="login"><a href="form.jsp">회원가입</a></td>
+<td colspan="2"><input id="test" type="submit" value="login">
+<a href="form.jsp">회원가입</a></td>
 </tr>
 </table>
 <br>

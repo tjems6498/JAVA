@@ -14,9 +14,9 @@ import mem.Service;
 import mem.ServiceImpl;
 
 /**
- * Servlet implementation class Login ¼­ºí¸´Àº À¥ ±â´ÉÀ» ±¸ÇöÇÑ ÀÚ¹ÙÆÄÀÏ
+ * Servlet implementation class Login ì„œë¸”ë¦¿ì€ ì›¹ ê¸°ëŠ¥ì„ êµ¬í˜„í•œ ìë°”íŒŒì¼
  */
-@WebServlet("/Login")
+@WebServlet("/member/Login")
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -36,7 +36,7 @@ public class Login extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		RequestDispatcher ds = request.getRequestDispatcher("cssTest.jsp");
+		RequestDispatcher ds = request.getRequestDispatcher("/member/login.jsp");
 		ds.forward(request, response);
 	}
 
@@ -47,17 +47,17 @@ public class Login extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		String result = "cssTest.jsp";
+		String result = "/member/login.jsp";
 		Service service = new ServiceImpl();
 		String id = request.getParameter("id");
 		String pwd = request.getParameter("pwd");
 		boolean flag = service.login(id, pwd);
 
 		if (flag) {
-			result = "success.jsp?id=" + id;
+			result = "/member/success.jsp?id=" + id;
 		}
 
-		// ¼­¹ö ³»¿¡¼­ ÆäÀÌÁö ÀÌµ¿
+		// ì„œë²„ ë‚´ì—ì„œ í˜ì´ì§€ ì´ë™
 		RequestDispatcher ds = request.getRequestDispatcher(result);
 		ds.forward(request, response);
 	}

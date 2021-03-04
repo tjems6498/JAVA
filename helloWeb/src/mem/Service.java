@@ -3,7 +3,7 @@ package mem;
 import java.util.ArrayList;
 
 public interface Service {
-	boolean addMember(Member m);
+	void addMember(Member m);
 	Member getMember(String id);
 	ArrayList<Member> getAll();
 	void editMember(Member m);

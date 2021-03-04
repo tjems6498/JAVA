@@ -12,7 +12,7 @@ public class ServiceImpl implements Service {
 	}
 
 	@Override
-	public boolean addMember(Member m) {
+	public void addMember(Member m) {
 		// TODO Auto-generated method stub
 		boolean flag = false;
 
@@ -24,7 +24,7 @@ public class ServiceImpl implements Service {
 		else {
 			System.out.println("중복 아이디 입니다.");
 		}
-		return flag;	
+	
 	}
 
 	@Override

@@ -73,7 +73,28 @@ public class DaoImpl implements Dao {
 	@Override
 	public ArrayList<Member> selectAll() {
 		// TODO Auto-generated method stub
-		return null;
+		Connection conn = db.getConnection();
+		String sql = "select * from member";
+		ArrayList<Member> list = new ArrayList<Member>();
+		ResultSet rs = null;
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				list.add(new Member(rs.getString(1),rs.getString(2),rs.getString(3),rs.getString(4)));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return list;
 	}
 
 	@Override
@@ -85,7 +106,26 @@ public class DaoImpl implements Dao {
 	@Override
 	public void delete(String id) {
 		// TODO Auto-generated method stub
-
+		int count = 0;
+		Connection conn = db.getConnection();
+		String sql = "delete from member where id = ?";
+		
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			count = pstmt.executeUpdate();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	
 	}
 
 
