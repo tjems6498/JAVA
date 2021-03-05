@@ -8,23 +8,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import mem.Member;
 import mem.Service;
 import mem.ServiceImpl;
 
 /**
- * Servlet implementation class Out
+ * Servlet implementation class Join
  */
-@WebServlet("/member/Out")
-public class Out extends HttpServlet {
+@WebServlet("/member/Join")
+public class Join extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Out() {
+    public Join() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,15 +33,8 @@ public class Out extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-
-		HttpSession session = request.getSession(false);
-		String id = (String)session.getAttribute("id");
-		Service service = new ServiceImpl();
-		service.delMember(id);
-		session.invalidate(); // íƒˆí‡´í–ˆìœ¼ë‹ˆê¹Œ ì„¸ì…˜ ëŠì–´ì§
-		response.sendRedirect(request.getContextPath()+"/member/login.jsp");
-		
+		RequestDispatcher ds = request.getRequestDispatcher("/member/join.jsp");
+		ds.forward(request, response);
 	}
 
 	/**
@@ -50,7 +42,27 @@ public class Out extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		//ÇÑ±Û±úÁü ¹æÁö
+		request.setCharacterEncoding("euc-kr");
+		response.setCharacterEncoding("euc-kr");
+		response.setContentType("text/html; charset=EUC-KR");
+		
+		//ÆûÆÄ¶ó¸ŞÅÍ load
+		String id = request.getParameter("id");
+		String pwd = request.getParameter("pwd");
+		String name = request.getParameter("name");
+		String email = request.getParameter("email");
+		
+		Service service = new ServiceImpl();
+		Member m = new Member(id, pwd, name, email);		
+		service.addMember(m);//È¸¿ø°¡ÀÔ ¿Ï·á	
+		response.sendRedirect(request.getContextPath()+"/member/login.jsp");
 	}
 
 }
+
+
+
+
+
+

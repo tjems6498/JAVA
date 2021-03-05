@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import dbconn.DBConn;
 
 public class DaoImpl implements Dao {
@@ -14,7 +15,7 @@ public class DaoImpl implements Dao {
 	public DaoImpl() {
 		db = DBConn.getInstance();
 	}
-	
+
 	@Override
 	public void insert(Member m) {
 		// TODO Auto-generated method stub
@@ -37,7 +38,7 @@ public class DaoImpl implements Dao {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} 
+		}
 	}
 
 	@Override
@@ -98,43 +99,34 @@ public class DaoImpl implements Dao {
 
 	@Override
 	public void update(Member m) {
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
-				Connection conn = db.getConnection();
-				String sql = "update member set pwd=? where id=?";
-				try {
-					PreparedStatement pstmt = conn.prepareStatement(sql);
-					pstmt.setString(1, m.getPwd());
-					pstmt.setString(2, m.getId());
-					pstmt.executeUpdate();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} finally {
-					try {
-						conn.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				} 
-	}
-
-	@Override
-	public void delete(String id) {
-		// TODO Auto-generated method stub
-		int count = 0;
 		Connection conn = db.getConnection();
-		String sql = "delete from member where id = ?";
-		
+		String sql = "update member set pwd=? where id=?";
 		try {
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, id);
-			count = pstmt.executeUpdate();
-		}
-		catch(Exception e) {
+			pstmt.setString(1, m.getPwd());
+			pstmt.setString(2, m.getId());			
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}finally {
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	@Override
+	public void delete(String id) {
+		Connection conn = db.getConnection();
+		String sql = "delete from member where id=?";
+		try {
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);		
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
 			try {
 				conn.close();
 			} catch (SQLException e) {
@@ -142,9 +134,6 @@ public class DaoImpl implements Dao {
 				e.printStackTrace();
 			}
 		}
-	
 	}
-
-
 
 }

@@ -58,8 +58,9 @@ public class Join extends HttpServlet {
 		
 		service.addMember(m);//회원가입 완료
 		
-		RequestDispatcher ds = request.getRequestDispatcher("/member/login.jsp");
-		ds.forward(request, response);
+		response.sendRedirect(request.getContextPath()+"/member/login.jsp");  
+		// 어떤 작업을 했을때 forward를 쓰고 새로고침을 하면 이 작업이 반복되기 때문에 그런 상황에서는 sendredirect를 써야함.
+		//forward를쓰면 login 페이지에 와도 주소창을 보면 아직 join에 있는것을 알 수 있음.
 	}
 
 }

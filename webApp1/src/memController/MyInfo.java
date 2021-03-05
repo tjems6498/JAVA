@@ -15,16 +15,16 @@ import mem.Service;
 import mem.ServiceImpl;
 
 /**
- * Servlet implementation class Out
+ * Servlet implementation class MyInfo
  */
-@WebServlet("/member/Out")
-public class Out extends HttpServlet {
+@WebServlet("/member/MyInfo")
+public class MyInfo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Out() {
+    public MyInfo() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,15 +34,13 @@ public class Out extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-
-		HttpSession session = request.getSession(false);
-		String id = (String)session.getAttribute("id");
 		Service service = new ServiceImpl();
-		service.delMember(id);
-		session.invalidate(); // 탈퇴했으니까 세션 끊어짐
-		response.sendRedirect(request.getContextPath()+"/member/login.jsp");
-		
+		HttpSession session = request.getSession(false);
+		String id = (String) session.getAttribute("id");
+		Member m = service.getMember(id);
+		request.setAttribute("m", m);
+		RequestDispatcher ds = request.getRequestDispatcher("/member/myinfo.jsp");
+		ds.forward(request, response);
 	}
 
 	/**
@@ -50,7 +48,12 @@ public class Out extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		String id = request.getParameter("id");
+		String pwd = request.getParameter("pwd");
+		Service service = new ServiceImpl();
+		service.editMember(new Member(id, pwd, "", ""));
+		RequestDispatcher ds = request.getRequestDispatcher("/member/success.jsp");
+		ds.forward(request, response);
 	}
 
 }

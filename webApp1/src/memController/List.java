@@ -1,6 +1,7 @@
 package memController;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -8,23 +9,22 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import mem.Member;
 import mem.Service;
 import mem.ServiceImpl;
 
 /**
- * Servlet implementation class Out
+ * Servlet implementation class List
  */
-@WebServlet("/member/Out")
-public class Out extends HttpServlet {
+@WebServlet("/member/List")
+public class List extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Out() {
+    public List() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,15 +34,12 @@ public class Out extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-
-		HttpSession session = request.getSession(false);
-		String id = (String)session.getAttribute("id");
 		Service service = new ServiceImpl();
-		service.delMember(id);
-		session.invalidate(); // íƒˆí‡´í–ˆìœ¼ë‹ˆê¹Œ ì„¸ì…˜ ëŠì–´ì§
-		response.sendRedirect(request.getContextPath()+"/member/login.jsp");
-		
+		ArrayList<Member> list = service.getAll();//ÀüÃ¼ °Ë»ö
+		//°Ë»ö°á°ú(list)¸¦ request¿¡ ´ã¾Æ¼­ ºä ÆäÀÌÁö(/member/list.jsp)·Î ÀÌµ¿
+		request.setAttribute("list", list);
+		RequestDispatcher ds = request.getRequestDispatcher("/member/list.jsp");
+		ds.forward(request, response);
 	}
 
 	/**

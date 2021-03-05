@@ -1,6 +1,7 @@
-package memController;
+package boardController;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,21 +11,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import board.Board;
+import board.Service;
+import board.ServiceImpl;
 import mem.Member;
-import mem.Service;
-import mem.ServiceImpl;
 
 /**
- * Servlet implementation class Out
+ * Servlet implementation class Show
  */
-@WebServlet("/member/Out")
-public class Out extends HttpServlet {
+@WebServlet("/board/Show")
+public class Show extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Out() {
+    public Show() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,15 +36,12 @@ public class Out extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		
-
-		HttpSession session = request.getSession(false);
-		String id = (String)session.getAttribute("id");
 		Service service = new ServiceImpl();
-		service.delMember(id);
-		session.invalidate(); // 탈퇴했으니까 세션 끊어짐
-		response.sendRedirect(request.getContextPath()+"/member/login.jsp");
-		
+		ArrayList<Board> list = service.getAll();
+	
+		request.setAttribute("list", list);
+		RequestDispatcher ds = request.getRequestDispatcher("/boarder/show.jsp");
+		ds.forward(request, response);
 	}
 
 	/**
@@ -50,6 +49,15 @@ public class Out extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession session = request.getSession(false);
+		String id = (String)session.getAttribute("id");
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		
+		Board b = new Board(id,title,content);
+		Service service = new ServiceImpl();
+		service.writeBoard(b);
+		
 		doGet(request, response);
 	}
 

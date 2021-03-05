@@ -10,12 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import mem.Member;
 import mem.Service;
 import mem.ServiceImpl;
 
 /**
- * Servlet implementation class Login ì„œë¸”ë¦¿ì€ ì›¹ ê¸°ëŠ¥ì„ êµ¬í˜„í•œ ìë°”íŒŒì¼
+ * Servlet implementation class Login ¼­ºí¸´Àº À¥ ±â´ÉÀ» ±¸ÇöÇÑ ÀÚ¹ÙÆÄÀÏ
  */
 @WebServlet("/member/Login")
 public class Login extends HttpServlet {
@@ -53,18 +52,14 @@ public class Login extends HttpServlet {
 		String id = request.getParameter("id");
 		String pwd = request.getParameter("pwd");
 		boolean flag = service.login(id, pwd);
-		
-		// í˜„ì¬ ì‚¬ìš©ì¤‘ì¸ ì„¸ì…˜ ê°€ì ¸ì˜´  default true :í˜„ì¬ ì„¸ì…˜ì´ ì—†ë‹¤ë©´ ìƒˆë¡œ ìƒì„±í•˜ì—¬ ë°˜í™˜  / false:ìƒì„±í•˜ì§€ ë§ì•„ë¼.(ì´ì „ì— ì‚¬ìš©í•œ ì„¸ì…˜ë§Œ ê°€ì ¸ì˜¨ë‹¤ëŠ” ì˜ë¯¸, ê¸°ì¡´ì„¸ì…˜ ì—†ë‹¤ë©´ ì—ëŸ¬)
-		
-		HttpSession session = request.getSession(true);  // ì—¬ê¸´ ì²˜ìŒ í˜ì´ì§€ë‹ˆê¹Œ trueì‚¬ìš©, ë‚´ì •ë³´ ìˆ˜ì •ê°™ì€ê³³ì€ falseë¥¼ ì‚¬ìš©í•´ì„œ ì„¸ì…˜ì„ ê°€ì§€ê³  ìˆì„ë•Œë§Œ ì ‘ê·¼ ê°€ëŠ¥í•˜ê²Œí•  ìˆ˜ ìˆìŒ
-		
-		
+		//ÇöÀç »ç¿ëÁßÀÎ ¼¼¼Ç °¡Á®¿È. ÆÄ¶÷=>true:µğÆúÆ®. ÇöÀç ¼¼¼ÇÀÌ ¾ø´Ù¸é »õ·Î »ı¼ºÇÏ¿© ¹İÈ¯.false:»ı¼ºÇÏÁö ¸»¾Æ¶ó. 
+		HttpSession session = request.getSession();
 		if (flag) {
-			session.setAttribute("id", id); // í˜ì´ì§€ ì´ë™í•´ë„ ì •ë³´ê°€ ìœ ì§€ ë¨  / request.setAttributeëŠ” ì‘ë‹µì„ í• ë•Œ ê¹Œì§€ë§Œ ì •ë³´ ìœ ì§€
+			session.setAttribute("id", id);
 			result = "/member/success.jsp";
 		}
 
-		// ì„œë²„ ë‚´ì—ì„œ í˜ì´ì§€ ì´ë™
+		// ¼­¹ö ³»¿¡¼­ ÆäÀÌÁö ÀÌµ¿
 		RequestDispatcher ds = request.getRequestDispatcher(result);
 		ds.forward(request, response);
 	}
