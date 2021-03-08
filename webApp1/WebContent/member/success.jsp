@@ -13,7 +13,7 @@
 <h3><a href="${pageContext.request.contextPath }/member/MyInfo">내정보보기</a></h3>
 <h3><a href="${pageContext.request.contextPath }/member/Out">탈퇴</a></h3>
 <h3><a href="${pageContext.request.contextPath }/member/Logout">로그아웃</a></h3>
-<h3><a href="${pageContext.request.contextPath }/board/Show">게시판</a></h3>
+<h3><a href="${pageContext.request.contextPath }/board/List">게시판</a></h3>
 
 </body>
 </html>
