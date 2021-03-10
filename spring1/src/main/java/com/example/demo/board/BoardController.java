@@ -17,17 +17,15 @@ public class BoardController {
 	@Autowired
 	private BoardService service;
 	
-	
+
 	@RequestMapping("/board/list")
 	public void list(Model m) {
 		ArrayList<Board> list = service.getAll();
-		m.addAttribute("list", list);
-		
+		m.addAttribute("list", list);	
 	}
 	
 	@GetMapping("/board/write")
-	public void get_writer() {
-		
+	public void get_writer() {	
 	}
 	
 	@PostMapping("/board/write")
@@ -47,13 +45,8 @@ public class BoardController {
 		
 		ArrayList<Board> list = null;
 		if(type == 1) {
-
-
 			list = service.getByWriter(writer);
-			
 		}else if(type == 2) {
-
-
 			title = "%" + title + "%";
 			list = service.getByTitle(title);	
 		}	
@@ -73,7 +66,5 @@ public class BoardController {
 		return "redirect:/board/list";
 	}
 	
-	
 }
-
 
