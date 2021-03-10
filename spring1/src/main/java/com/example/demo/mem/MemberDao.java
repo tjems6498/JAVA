@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-@Mapper  // 맴퍼로 등록
+@Mapper  // 맵퍼로 등록
 public interface MemberDao {
 	@Insert("insert into member values(#{id},#{pwd},#{name},#{email})")
 	void insert(Member m);
