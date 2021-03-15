@@ -24,6 +24,7 @@ public class Board2 {
 	private String title;
 	private String Content;
 	
+	
 	@PrePersist //먼저실행
 	public void beforeCreate() {
 		w_date = new Date();
